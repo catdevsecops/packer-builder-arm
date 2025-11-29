@@ -42,7 +42,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            mkaczanowski/packer-builder-arm
+            catdevsecops/packer-builder-arm
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -64,17 +64,17 @@ jobs:
         run: |
           docker run --rm --privileged -v /dev:/dev -v ${PWD}:/build \
           packer-builder-arm:test init \
-          boards/raspberry-pi-4/archlinuxarm.pkr.hcl
+          boards/raspberry-pi-4/ubuntu_server_20.04_arm64.pkr.hcl
 
       - name: Test build board
         if: github.event_name == 'pull_request'
         run: |
           docker run --rm --privileged -v /dev:/dev \
           -v ${PWD}:/build packer-builder-arm:test build \
-          boards/raspberry-pi-4/archlinuxarm.pkr.hcl  \
+          boards/raspberry-pi-4/ubuntu_server_20.04_arm64.pkr.hcl  \
           -extra-system-packages=bmap-tools,zstd
-          du -h raspberry-pi-4.img
-          du -h --apparent-size raspberry-pi-4.img
+          du -h ubuntu-20.04.img
+          du -h --apparent-size ubuntu-20.04.img
 
 
       - name: Login to GitHub Container Registry
@@ -82,7 +82,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_IO_REGISTRY_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
         uses: docker/build-push-action@v5
