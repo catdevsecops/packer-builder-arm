@@ -22,15 +22,15 @@ setup_qemu() {
     if [ "$uname_m" == "aarch64" ]; then
         echo "Register qemu-x86_64"
         # shellcheck disable=SC2028
-        echo ":qemu-x86_64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x3e\x00:\xff\xff\xff\xff\xff\xfe\xfe\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-x86_64-static:F" > /proc/sys/fs/binfmt_misc/register
+        echo ":qemu-x86_64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x3e\x00:\xff\xff\xff\xff\xff\xfe\xfe\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-x86_64-static:F" >/proc/sys/fs/binfmt_misc/register
     else
         echo "Register qemu-aarch64"
         # shellcheck disable=SC2028
-        echo ":qemu-aarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-aarch64-static:F" > /proc/sys/fs/binfmt_misc/register
+        echo ":qemu-aarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-aarch64-static:F" >/proc/sys/fs/binfmt_misc/register
     fi
     echo "Register qemu-arm"
     # shellcheck disable=SC2028
-    echo ":qemu-arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-arm-static:F" > /proc/sys/fs/binfmt_misc/register
+    echo ":qemu-arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-arm-static:F" >/proc/sys/fs/binfmt_misc/register
 }
 
 do_qemu_setup=${SETUP_QEMU:-true}
@@ -39,10 +39,10 @@ if [ "$do_qemu_setup" = true ]; then
 fi
 
 declare -a EXTRA_SYSTEM_PACKAGES=()
-for arg do
+for arg; do
     shift
     if [[ "${arg}" == -extra-system-packages=* ]]; then
-        IFS=',' read -r -a EXTRA_SYSTEM_PACKAGES <<< "${arg//-extra-system-packages=}"
+        IFS=',' read -r -a EXTRA_SYSTEM_PACKAGES <<<"${arg//-extra-system-packages=/}"
         continue
     fi
     set -- "$@" "${arg}"

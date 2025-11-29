@@ -1,10 +1,11 @@
+---
 name: Archlinuxarm armv8 docker
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   schedule:
     # once a week
-    - cron:  '0 0 * * 1'
+    - cron: '0 0 * * 1'
 jobs:
 
   build:

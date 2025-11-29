@@ -1,5 +1,5 @@
 # Source for qemu-user-static >7.0
-FROM public.ecr.aws/ubuntu/ubuntu:jammy as qemu_binaries
+FROM public.ecr.aws/ubuntu/ubuntu:noble as qemu_binaries
 
 # hadolint ignore=DL3008
 RUN apt-get update -qq \
@@ -32,7 +32,7 @@ COPY . .
 
 RUN go build -o packer-builder-arm
 
-ENV PACKER_VERSION 1.10.0
+ENV PACKER_VERSION 1.10.3
 
 RUN if [ "$(uname -m)" = "aarch64" ]; then PACKER_ARCH="arm64"; else PACKER_ARCH="amd64"; fi && \
   wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_${PACKER_ARCH}.zip -q -O /tmp/packer.zip && \
@@ -43,7 +43,7 @@ RUN if [ "$(uname -m)" = "aarch64" ]; then PACKER_ARCH="arm64"; else PACKER_ARCH
 # COMPRESS WITH UPX
 RUN upx-ucl --lzma /build/packer-builder-arm /bin/packer
 
-FROM public.ecr.aws/lts/ubuntu:jammy
+FROM public.ecr.aws/lts/ubuntu:noble
 
 # hadolint ignore=DL3008
 RUN apt-get update -qq \
@@ -68,10 +68,10 @@ COPY --from=builder /build/packer-builder-arm /bin/packer /bin/
 COPY --from=qemu_binaries /binaries/* /usr/bin/
 
 # Enable detailed logging
-ENV PACKER_LOG=1
+ENV PACKER_LOG 1
 
 # Enable plugin / download caching for consecutive runs
-ENV PACKER_PLUGIN_PATH="/bin:/build/.packer_plugins"
-ENV PACKER_CACHE_DIR="/build/.packer_cache"
+ENV PACKER_PLUGIN_PATH "/bin:/build/.packer_plugins"
+ENV PACKER_CACHE_DIR "/build/.packer_cache"
 
 ENTRYPOINT ["/entrypoint.sh"]
