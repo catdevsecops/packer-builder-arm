@@ -16,6 +16,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+  packages: write  # Essential para GHCR push/pull
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -42,7 +46,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            catdevsecops/packer-builder-arm
+            ghcr.io/catdevsecops/packer-plugin-arm
           tags: |
             type=ref,event=branch
             type=ref,event=pr
