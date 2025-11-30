@@ -6,17 +6,17 @@ import (
 	"errors"
 	"os"
 
+	cfg "github.com/catdevsecops/packer-plugin-arm/config"
 	"github.com/hashicorp/hcl/v2/hcldec"
 	"github.com/hashicorp/packer-plugin-sdk/multistep"
 	"github.com/hashicorp/packer-plugin-sdk/multistep/commonsteps"
 	"github.com/hashicorp/packer-plugin-sdk/packer"
 	"github.com/hashicorp/packer-plugin-sdk/template/config"
 	"github.com/hashicorp/packer-plugin-sdk/template/interpolate"
-	cfg "github.com/mkaczanowski/packer-builder-arm/config"
 )
 
 // Config top-level holder for more specific configurations used
-// while building packer-builder-arm
+// while building packer-plugin-arm
 type Config struct {
 	cfg.RemoteFileConfig `mapstructure:",squash"`
 	cfg.ImageConfig      `mapstructure:",squash"`

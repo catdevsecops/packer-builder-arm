@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"sort"
 
+	cfg "github.com/catdevsecops/packer-plugin-arm/config"
 	"github.com/hashicorp/packer-plugin-sdk/multistep"
 	"github.com/hashicorp/packer-plugin-sdk/packer"
-	cfg "github.com/mkaczanowski/packer-builder-arm/config"
 )
 
 func sortMountablePartitions(partitions []cfg.Partition, reverse bool) []cfg.Partition {

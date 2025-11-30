@@ -3,8 +3,8 @@
 package builder
 
 import (
+	"github.com/catdevsecops/packer-plugin-arm/config"
 	"github.com/hashicorp/hcl/v2/hcldec"
-	"github.com/mkaczanowski/packer-builder-arm/config"
 	"github.com/zclconf/go-cty/cty"
 )
 
