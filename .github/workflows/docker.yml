@@ -46,7 +46,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            catdevsecops/packer-builder-arm
+            ghcr.io/catdevsecops/packer-plugin-arm
           tags: |
             type=ref,event=branch
             type=ref,event=pr
