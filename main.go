@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/hashicorp/packer-plugin-sdk/plugin"
-	"github.com/mkaczanowski/packer-plugin-arm/builder"
-	"github.com/mkaczanowski/packer-plugin-arm/version"
 	"os"
+
+	"github.com/catdevsecops/packer-plugin-arm/builder"
+	"github.com/catdevsecops/packer-plugin-arm/version"
+	"github.com/hashicorp/packer-plugin-sdk/plugin"
 )
 
 func main() {

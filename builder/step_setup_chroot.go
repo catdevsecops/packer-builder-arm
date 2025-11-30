@@ -9,9 +9,9 @@ import (
 	"sort"
 	"strings"
 
+	cfg "github.com/catdevsecops/packer-plugin-arm/config"
 	"github.com/hashicorp/packer-plugin-sdk/multistep"
 	"github.com/hashicorp/packer-plugin-sdk/packer"
-	cfg "github.com/mkaczanowski/packer-plugin-arm/config"
 )
 
 func sortMountpoints(chrootMounts []cfg.ChrootMount, reverse bool) []cfg.ChrootMount {
