@@ -16,6 +16,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+  packages: write  # Essential para GHCR push/pull
+
 jobs:
   docker:
     runs-on: ubuntu-latest
